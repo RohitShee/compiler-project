@@ -1,0 +1,8 @@
+else
+float
+if
+int
+return
+void
+read
+print

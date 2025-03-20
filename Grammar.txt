@@ -1,0 +1,68 @@
+Program -> FunctionList
+
+FunctionList -> Function FunctionList | epsilon
+
+Function -> Type Identifier ( ParameterList ) FuncionalBlock | void Identifier (parameterList) VoidFunctionalBlock
+
+ParameterList -> Parameter ParameterListTail | epsilon
+
+ParameterListTail -> , Parameter ParameterListTail | epsilon
+
+Parameter -> Type Identifier
+
+Type -> int
+Type -> float
+
+
+FuncionalBlock -> { StmtList return Expression ; }
+VoidFunctionalBlock -> Block
+
+StmtList -> Stmt StmtList | epsilon
+
+Stmt -> Declaration | IOStmt | IfStmt | Block | ExprStmt
+
+Declaration -> Type Identifier = Expression ; | Type Identifier ;
+
+IOStmt -> read Identifier ; | print Identifier ;
+
+IfStmt -> if ( Condition ) Block else Block
+
+Block -> { StmtList }
+
+ExprStmt -> Expression ;
+
+Condition -> Expression RelOp Expression
+
+RelOp -> <
+RelOp -> >
+RelOp -> ==
+
+
+Expression -> Expression RelOp Term | Term | FunctionCall 
+
+Term -> Term AddOp AddedTerm | AddedTerm
+
+AddOp -> +
+AddOp -> -
+
+AddedTerm -> AddedTerm MulOp Factor | Factor
+
+MulOp -> *
+MulOp -> /
+MulOp -> %
+
+Factor -> ++ POSTIncrementedTerm | POSTIncrementedTerm
+
+POSTIncrementedTerm -> PREIncrementedTerm ++ | PREIncrementedTerm
+
+PREIncrementedTerm -> Identifier | Number
+
+Identifier -> id
+
+Number -> numeral
+
+FunctionCall -> Identifier ( ArgumentList )
+
+ArgumentList -> Expression ArgumentListTail | epsilon
+ArgumentListTail -> , Expression ArgumentListTail | epsilon
+

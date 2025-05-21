@@ -1,68 +1,48 @@
-Program -> FunctionList
+<program>         -> <element> <program> | EPSILON
+<element>         -> <function> | <global_statement>
 
-FunctionList -> Function FunctionList | epsilon
+<global_statement> -> <declaration> | <assignment> | <expression_stmt> | <read_stmt> | <print_stmt>
 
-Function -> Type Identifier ( ParameterList ) FuncionalBlock | void Identifier (parameterList) VoidFunctionalBlock
+<function>        -> <type> ID LPAREN <params> RPAREN LBRACE <statements> RBRACE
 
-ParameterList -> Parameter ParameterListTail | epsilon
+<params>          -> <param_list> | EPSILON
+<param_list>      -> <param> COMMA <param_list> | <param>
+<param>           -> <type> ID
 
-ParameterListTail -> , Parameter ParameterListTail | epsilon
+<type>            -> INT | FLOAT | VOID
 
-Parameter -> Type Identifier
+<statements>      -> <statement> <statements> | EPSILON
+<statement>       -> <declaration> | <read_stmt> | <print_stmt> | <if_else_stmt> | <assignment> | <expression_stmt> | <return_stmt>
 
-Type -> int
-Type -> float
+<declaration>     -> <type> ID <optional_init> SEMICOLON
+<optional_init>   -> EQUALS <expression> | EPSILON
 
+<read_stmt>       -> READ ID SEMICOLON
+<print_stmt>      -> PRINT ID SEMICOLON
+<return_stmt>     -> RETURN <optional_ret_value> SEMICOLON
+<optional_ret_value> -> <expression> | EPSILON
 
-FuncionalBlock -> { StmtList return Expression ; }
-VoidFunctionalBlock -> Block
+<if_else_stmt>    -> IF LPAREN <condition> RPAREN LBRACE <statements> RBRACE ELSE LBRACE <statements> RBRACE
 
-StmtList -> Stmt StmtList | epsilon
+<condition>       -> <additive_expression> <rel_op> <additive_expression>
+<rel_op>          -> LT | GT | EQ
 
-Stmt -> Declaration | IOStmt | IfStmt | Block | ExprStmt
+<assignment>      -> ID EQUALS <expression> SEMICOLON
 
-Declaration -> Type Identifier = Expression ; | Type Identifier ;
+<expression>      -> <additive_expression>
 
-IOStmt -> read Identifier ; | print Identifier ;
+<additive_expression> -> <additive_expression> PLUS <term> | <additive_expression> MINUS <term> | <term>
 
-IfStmt -> if ( Condition ) Block else Block
+<term>            -> <term> MULTIPLY <factor> | <term> DIVIDE <factor> | <term> MOD <factor> | <factor>
 
-Block -> { StmtList }
+<factor>          -> <variable_or_call> | LPAREN <expression> RPAREN | <literal> | <unary_op> <factor>
 
-ExprStmt -> Expression ;
+<variable_or_call> -> ID <postfix_or_call>
+<postfix_or_call> -> INCREMENT | LPAREN <args> RPAREN | EPSILON
+<args>            -> <expression_list> | EPSILON
+<expression_list> -> <expression> COMMA <expression_list> | <expression>
 
-Condition -> Expression RelOp Expression
+<literal>         -> INT_LIT | FLOAT_LIT
+<unary_op>        -> PLUS | MINUS
 
-RelOp -> <
-RelOp -> >
-RelOp -> ==
-
-
-Expression -> Expression RelOp Term | Term | FunctionCall 
-
-Term -> Term AddOp AddedTerm | AddedTerm
-
-AddOp -> +
-AddOp -> -
-
-AddedTerm -> AddedTerm MulOp Factor | Factor
-
-MulOp -> *
-MulOp -> /
-MulOp -> %
-
-Factor -> ++ POSTIncrementedTerm | POSTIncrementedTerm
-
-POSTIncrementedTerm -> PREIncrementedTerm ++ | PREIncrementedTerm
-
-PREIncrementedTerm -> Identifier | Number
-
-Identifier -> id
-
-Number -> numeral
-
-FunctionCall -> Identifier ( ArgumentList )
-
-ArgumentList -> Expression ArgumentListTail | epsilon
-ArgumentListTail -> , Expression ArgumentListTail | epsilon
-
+<expression_stmt> -> <expression> SEMICOLON

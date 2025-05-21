@@ -1,0 +1,67 @@
+int result=0;
+int intq =1;
+void helper(int x, float y)
+{
+result=x;
+    int result;
+    result = x - 2; // Simple arithmetic operation
+    print result;
+    if(x>y){ return 0;}
+    else {return;}
+}
+int glo = 5;
+glo = 10 + 5;
+float add(float x, float y)
+{
+    return x + y;
+}
+
+int main()
+{
+    int a = 10;
+    float b;
+    b = 10.5;
+    read b;    // Read a floating point value into b
+    a = a + 5; // Addition operator
+    print a;
+
+    int c = a % 3; // Modulus operator
+    print c;
+    // --c;
+    a++; // Postfix increment operator
+    print a;
+
+    if (a > b)
+    {                  // Using relational operator ">"
+        int d = a * 2; // Multiplication operator; declaration inside block
+
+        if (d > 10)
+        { // nested if else
+            print d;
+        }
+        else
+        {
+            d = add(a + 12, c);
+            d = add() + 12.2;
+        }
+    }
+    else
+    {
+        float d = b / 2; // Division operator; declaration inside block
+        print d;
+    }
+
+    if (a == b)
+    {                  // Using relational operator "==" for equality test
+        int e = a - 1; // Subtraction operator
+        print e;
+    }
+    else
+    {
+        int e = a + 1; // Addition operator
+        print e;
+    }
+
+    helper(a, b); // Call to another function
+    return 0;
+}
